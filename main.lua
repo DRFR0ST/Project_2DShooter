@@ -54,6 +54,7 @@ function love.load()
 					x = Mouse.x + (178/2),
 					y = Mouse.y + (178/2),
 					img = love.graphics.newImage("gfx/celownik.png"),
+					recoil = 0.0,
 				},
 				fire = {},
 			},
@@ -88,7 +89,7 @@ function love.load()
 		Environment.gun.y = Mouse.y * 1.1 + (Environment.gun.img:getHeight() / 2) + (Environment.gun.img:getHeight() / 20);
 
 		Environment.gun.aim.x = Mouse.x;
-		Environment.gun.aim.y = Mouse.y;
+		Environment.gun.aim.y = Mouse.y - Environment.gun.aim.recoil;
 
 		local i, o
 		for i, o in ipairs(Environment.holes) do
@@ -108,6 +109,10 @@ function love.load()
 
 		if(Environment.gun.r > 0) then
 			Environment.gun.r = Environment.gun.r - 0.09;
+		end
+
+		if(Environment.gun.aim.recoil > 0) then
+			Environment.gun.aim.recoil = Environment.gun.aim.recoil - 1;
 		end
 
 		fpsGraph.updateFPS(fps, dt)
@@ -191,9 +196,10 @@ function love.mousepressed( x, y, button )
 		if(Environment.gun.bullets > 0)then
 			Environment.gun.bullets = Environment.gun.bullets - 1;
 			Environment.gun.r = 1.0;
+			Environment.gun.aim.recoil = 10.0;
 			playMusic(Environment.gun.sfx.shot);
 			CreateFire(Environment.gun.x - Environment.gun.img:getWidth() / 2.8, Environment.gun.y - Environment.gun.img:getHeight()/2.3);
-			CreateHole(x, y);
+			CreateHole(x, y + Environment.gun.aim.recoil);
 		else
 			playMusic(Environment.gun.sfx.empty);
 		end
