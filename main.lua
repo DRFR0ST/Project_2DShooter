@@ -58,10 +58,12 @@ function love.load()
 				fire = {},
 			},
 			background = {
-				img = love.graphics.newImage("gfx/background01.png"),
+				img = love.graphics.newImage("gfx/background1.png"),
 			},
 			holes = {},
 		}
+
+		Environment.background.img = love.graphics.newImage("gfx/background"..love.math.random(1,2)..".png");
 	--[[ ----------- ]]--
 
 	--[[ Settings ]]--
