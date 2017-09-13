@@ -1,0 +1,1 @@
+start "" "D:\Google Drive\love\love-0.9.2-win64\love.exe" "%CD%" -- console
